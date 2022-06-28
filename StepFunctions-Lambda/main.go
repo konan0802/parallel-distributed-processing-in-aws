@@ -7,7 +7,7 @@ import (
 
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	// usersテーブルからタスクの取得
-
+	res := "gogogo"
 	// userごとに指定の数のテストデータを作成
 
 	// tweetsテーブルにインサート
