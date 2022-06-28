@@ -63,11 +63,11 @@ func fetchUsers(db *sql.DB) (Users, error) {
 		}
 		users = append(users, user)
 	}
-
 	err = rows.Err()
 	if err != nil {
 		return users, err
 	}
+
 	return users, nil
 }
 
