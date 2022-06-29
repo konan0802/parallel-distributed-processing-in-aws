@@ -17,7 +17,9 @@ type User struct {
 
 type Users []User
 
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func Handler(request events.APIGatewayProxyRequest) (Users, error) {
+	var users Users
+
 	// 接続情報（一時的なDBのため公開状態を許容する）
 	db, err := sql.Open("mysql", "admin:Yk080211@tcp(parallel-distributed-processing.cld5vrk9jap3.ap-northeast-1.rds.amazonaws.com:3306)/prod")
 	if err != nil {
@@ -26,21 +28,12 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	defer db.Close()
 
 	// usersテーブルからタスクの取得
-	users, err := fetchUsers(db)
+	users, err = fetchUsers(db)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// userごとに指定の数のテストデータを作成
-
-	// tweetsテーブルにインサート
-
-	// usersテーブルのアップデート
-
-	return events.APIGatewayProxyResponse{
-		Body:       string(users[0].Name),
-		StatusCode: 200,
-	}, nil
+	return users, nil
 }
 
 func fetchUsers(db *sql.DB) (Users, error) {
