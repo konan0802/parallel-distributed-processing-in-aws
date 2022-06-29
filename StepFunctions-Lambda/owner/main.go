@@ -1,11 +1,11 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
@@ -17,7 +17,7 @@ type User struct {
 
 type Users []User
 
-func Handler(request events.APIGatewayProxyRequest) (Users, error) {
+func Handler(ctx context.Context) (Users, error) {
 	var users Users
 
 	// 接続情報（一時的なDBのため公開状態を許容する）
