@@ -10,9 +10,9 @@ import (
 )
 
 type User struct {
-	ID   int
-	Name string
-	Num  int
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Num  int    `json:"num"`
 }
 
 type Users []User
