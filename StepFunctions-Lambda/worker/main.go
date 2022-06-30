@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"math/rand"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -19,7 +18,6 @@ type User struct {
 }
 
 type Tweet struct {
-	TwID int    `json:"twid"`
 	Text string `json:"text"`
 }
 
@@ -40,8 +38,10 @@ func Handler(ctx context.Context, user User) (events.APIGatewayProxyResponse, er
 	}
 
 	// tweetsテーブルにインサート
-
-	// usersテーブルのアップデート
+	err = insertTweets(db, user, tweets)
+	if err != nil {
+		panic(err.Error())
+	}
 
 	return events.APIGatewayProxyResponse{
 		Body:       string(tweets[0].Text),
@@ -53,24 +53,38 @@ func makeTestData(num int) (Tweets, error) {
 	var tweets Tweets
 	for i := 0; i < num; i++ {
 		var tweet Tweet
-		// ランダムIDの生成
-		var twID int
-		rand.Seed(time.Now().Unix())
-		twID = rand.Intn(100)
 
 		// ランダム文字列の生成
 		var letter = []rune("あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよわをん")
 
-		b := make([]rune, twID)
+		b := make([]rune, num)
 		for i := range b {
 			b[i] = letter[rand.Intn(len(letter))]
 		}
-		tweet.TwID = twID
 		tweet.Text = string(b)
 
 		tweets = append(tweets, tweet)
 	}
 	return tweets, nil
+}
+
+func insertTweets(db *sql.DB, user User, tweets Tweets) error {
+
+	for _, tweet := range tweets {
+		// プリペアードステートメント
+		stmt, err := db.Prepare("INSERT INTO tweets(tw_user_id, text) VALUES(?,?);")
+		if err != nil {
+			return err
+		}
+		defer stmt.Close()
+
+		// クエリ実行
+		_, err = stmt.Exec(user.ID, tweet.Text)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func main() {
