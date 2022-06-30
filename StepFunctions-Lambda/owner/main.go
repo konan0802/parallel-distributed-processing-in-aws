@@ -17,7 +17,12 @@ type User struct {
 
 type Users []User
 
-func Handler(ctx context.Context) (Users, error) {
+type PayloadData struct {
+	Users []User `json:"users"`
+}
+
+func Handler(ctx context.Context) (PayloadData, error) {
+	var payloadData PayloadData
 	var users Users
 
 	// 接続情報（一時的なDBのため公開状態を許容する）
@@ -33,7 +38,9 @@ func Handler(ctx context.Context) (Users, error) {
 		panic(err.Error())
 	}
 
-	return users, nil
+	payloadData.Users = users
+
+	return payloadData, nil
 }
 
 func fetchUsers(db *sql.DB) (Users, error) {
