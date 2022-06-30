@@ -1,0 +1,28 @@
+{
+    "StartAt": "owner",
+    "States": {
+        "owner": {
+            "Type": "Task",
+            "Resource": "*****",
+            "TimeoutSeconds": 870,
+            "Next": "workers"
+        },
+        "workers": {
+            "Type": "Map",
+            "MaxConcurrency": 0,
+            "ItemsPath": "$.users",
+            "Iterator": {
+                "StartAt": "worker",
+                "States": {
+                    "worker": {
+                        "Type": "Task",
+                        "Resource": "*****",
+                        "TimeoutSeconds": 870,
+                        "End": true
+                    }
+                }
+            },
+            "End": true
+        }
+    }
+}
