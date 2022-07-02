@@ -10,14 +10,15 @@ AWSサービスにおける並列分散バッチ処理の検証
 
 
 ## 1. Step Functions（Lambda）
-### 構成
+### ◇ 構成
+![stepfunctions_graph](StepFunctions-Lambda/stepfunctions_graph.png)
 
-### 実行時間
+### ◇ 実行時間
 
 ## 2. Step Functions（ECS）
 上記の `Step Functions（Lambda）` においてECSに変更するだけのため作成は割愛
 
 ## 3. AWS Batch（Fargate）
-### 構成
+### ◇ 構成
 
-### 実行時間
+### ◇ 実行時間
