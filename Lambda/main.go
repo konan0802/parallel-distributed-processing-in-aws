@@ -19,6 +19,12 @@ type User struct {
 
 type Users []User
 
+type Tweet struct {
+	Text string `json:"text"`
+}
+
+type Tweets []Tweet
+
 func Handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
 	var users Users
 
