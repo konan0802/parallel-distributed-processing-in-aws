@@ -9,8 +9,6 @@ AWSサービスにおける並列分散バッチ処理の検証
 ## 検証内容
 `usersテーブル`上の各ユーザーに対して`num`数分のTweetデータを作成する。<br>
 そして、そのTweetデータを`tweetsテーブル`に格納する。<br>
-* users：500user
-* num：50（一律で設定）
 
 #### # usersテーブル
 |  id  |  name  |  num  |
@@ -29,6 +27,12 @@ AWSサービスにおける並列分散バッチ処理の検証
 ![stepfunctions_graph](StepFunctions-Lambda/stepfunctions_graph.png)
 
 ### ◇ 実行時間
+#### # 検証状況
+* users：500
+* num：50（一律で設定）
+#### # 検証結果
+* 実行時間：18.4s
+* tweets：25,000
 
 ## 2. Step Functions（ECS）
 上記の `Step Functions（Lambda）` においてECSに変更するだけのため作成は割愛
