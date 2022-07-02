@@ -31,13 +31,20 @@ AWSサービスにおける並列分散バッチ処理の検証
 
 ## 1. Lambda
 ### ◇ 構成
+単一のLambda上でusersテーブルから取得したusers分、<br>
+for文によりtweetを作成しINSERTを実行。
 ### ◇ 検証
 #### # 検証結果 
-
+* 実行時間：191.27s
+* tweets：25,000
 
 ## 2. Step Functions（Lambda）
 ### ◇ 構成
 ![stepfunctions_graph](StepFunctions-Lambda/stepfunctions_graph.png)
+
+owner：usersテーブルからuserを取得しMapとして返却<br>
+worker：各worker内でtweetを作成しINSERTを実行
+
 ### ◇ 検証
 #### # 検証結果
 * 実行時間：18.4s
