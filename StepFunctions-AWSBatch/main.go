@@ -2,8 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"flag"
+	"fmt"
 	"math/rand"
+	"os"
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -17,9 +18,11 @@ type Tweets []Tweet
 
 func main() {
 	// コマンドライン引数
-	userID, _ := strconv.Atoi(*flag.String("userID", "1", "user.id"))
-	userNum, _ := strconv.Atoi(*flag.String("userNum", "50", "user.num"))
-	flag.Parse()
+	argsWithoutProg := os.Args[1:]
+	userID, _ := strconv.Atoi(argsWithoutProg[0])
+	userNum, _ := strconv.Atoi(argsWithoutProg[1])
+
+	fmt.Println(userID)
 
 	// 接続情報（一時的なDBのため公開状態を許容する）
 	db, err := sql.Open("mysql", "admin:Yk080211@tcp(parallel-distributed-processing.cld5vrk9jap3.ap-northeast-1.rds.amazonaws.com:3306)/prod")
